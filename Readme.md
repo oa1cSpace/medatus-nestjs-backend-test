@@ -23,7 +23,7 @@ User can change its current password (`POST: { session: object, oldPassword: str
 Please consider using the boilerplate `nest.js` project from this repository and align to the best practices of implementation right from the official `nest.js` documentation page! This project is not complicated to be implemented, but it offers us a great way to see how you utilize existing technology, understand when to use `controllers`, `providers`, `middleware`, `pipes`, `guards` and `interceptors`.
 
 ### Optional
-If you want to show us that you really care about performance, implement this task make tell `nest.js` to use `Fastify` by using `nests` `FastifyAdapter` framework adapter.
+If you want to show us that you really care about performance, implement this task tell `nest.js` to use `Fastify` by using `nests` `FastifyAdapter` framework adapter.
 
 #### MongoDB
 Please consider using MongoDB as your database solution. Furthermore, with the project, there is a `docker-compose.yaml` file to easily set up a MongoDB instance to work with. Again – also refer to the official documentation how to use best practices for `nest.js` to communicate with MongoDB. If you do not have docker, or you are already hosting a MongoDB instance of some kind, that is no problem. You are free to do so, but please update the `user` and `password` field within the `docker-compose.yaml` file, so we can easily spin up our test stack with the correct credentials used within your implementation.
