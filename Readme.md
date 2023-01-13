@@ -17,6 +17,17 @@ They can log in (`POST: { username: string, password: string }` at `/login`). If
 ### Password change
 User can change its current password (`POST: { session: object, oldPassword: string, newPassword: string }` at `/user/change-password`). If changing the password is successful, the current session will be revoked and the user as to login again.
 
+### Tools
+
+#### Nest.js
+Please consider using the boilerplate `nest.js` project from this repository and align to the best practices of implementation right from the official `nest.js` documentation page! This project is not complicated to be implemented, but it offers us a great way to see how you utilize existing technology, understand when to use `controllers`, `providers`, `middleware`, `pipes`, `guards` and `interceptors`.
+
+### Optional
+If you want to show us that you really care about performance, implement this task make tell `nest.js` to use `Fastify` by using `nests` `FastifyAdapter` framework adapter.
+
+#### MongoDB
+Please consider using MongoDB as your database solution. Furthermore, with the project, there is a `docker-compose.yaml` file to easily set up a MongoDB instance to work with. Again – also refer to the official documentation how to use best practices for `nest.js` to communicate with MongoDB. If you do not have docker, or you are already hosting a MongoDB instance of some kind, that is no problem. You are free to do so, but please update the `user` and `password` field within the `docker-compose.yaml` file, so we can easily spin up our test stack with the correct credentials used within your implementation.
+
 # General Architecture Guidelines
 The following guidelines are part of the implementation requirements. Please utilize available node.js modules to achieve the desired behavior, document what functionality you utilize from external and what functionality has been added by you.
 
@@ -58,7 +69,6 @@ To keep the authenticated state and have the ability to change the password, the
 - The session ID must be long enough to prevent brute force attacks, where an attacker can go through the whole range of ID values and verify the existence of valid sessions. The session ID length must be at least `128 bits (16 bytes)`.
 
 - The session ID must be unpredictable (random enough) to prevent guessing attacks, where an attacker can guess or predict the ID of a valid session through statistical analysis techniques. For this purpose, a good [CSPRNG](https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator) (Cryptographically Secure Pseudorandom Number Generator) must be used.
-
 - The session ID value must provide at least `64 bits` of entropy (if a good PRNG is used, this value is estimated to be half the length of the session ID).
 - Additionally, a random session ID is not enough; it must also be unique to avoid duplicated IDs. A random session ID must not already exist in the current session ID space.
 - The session ID content (or value) must be meaningless to prevent information disclosure attacks, where an attacker is able to decode the contents of the ID and extract details of the user, the session, or the inner workings of the web application.
