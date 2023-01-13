@@ -17,6 +17,8 @@ They can log in (`POST: { username: string, password: string }` at `/login`). If
 ### Password change
 User can change its current password (`POST: { session: object, oldPassword: string, newPassword: string }` at `/user/change-password`). If changing the password is successful, the current session will be revoked and the user as to login again.
 
+#### Server Response:
+The server response - even for failure - should be of this form: `{ requestObject: any, message: string}`.
 ### Tools
 
 #### Nest.js
