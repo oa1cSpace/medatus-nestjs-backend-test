@@ -23,6 +23,6 @@ export class RegisterService {
     if (!this.passwordValidator.validate(password)) {
       throw new HttpException('Weak Password', HttpStatus.BAD_REQUEST);
     }
-    return this.usersService.createUser(username, password);
+    await this.usersService.createUser(username, password);
   }
 }

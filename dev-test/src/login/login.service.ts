@@ -22,6 +22,16 @@ export class LoginService {
     if (!isPasswordMatching) {
       throw new UnauthorizedException();
     }
-    return { userId: user.userId, username: user.username };
+    // check if the user's password has not been changed in the last 180 days
+    const lastPasswordChange = new Date(user.lastPasswordChange);
+    const today = new Date();
+    const passwordAge = today.getTime() - lastPasswordChange.getTime();
+    const passwordAgeInDays = passwordAge / (1000 * 3600 * 24);
+    if (passwordAgeInDays > 180) {
+      throw new HttpException(
+        'Your password has expired, please change your password',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
   }
 }

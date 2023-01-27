@@ -28,14 +28,14 @@ export class UsersService {
   //   return this.usersRepository.find({});
   // }
 
-  async createUser(username: string, password: string): Promise<Usr> {
+  async createUser(username: string, password: string) {
     const hashedPassword = await encodePassword(password);
-    const res = await this.usersRepository.create({
+    await this.usersRepository.create({
       userId: uuidv4(),
       username: username.toLowerCase(),
       password: hashedPassword,
+      lastPasswordChange: new Date(),
     });
-    return { userId: res.userId, username: res.username };
   }
 
   // async updateUser(userId: string, userUpdates: userUpdateUserDto): Promise<User> {
@@ -49,7 +49,7 @@ export class UsersService {
   ) {
     const user = await this.getUserById(userId);
     if (!user) {
-      throw new HttpException('No such user', HttpStatus.NOT_FOUND);
+      throw new HttpException('Invalid UID', HttpStatus.NOT_FOUND);
     }
     const isPasswordMatching = await comparePassword(
       oldPassword,
@@ -62,6 +62,7 @@ export class UsersService {
       throw new HttpException('Weak Password', HttpStatus.BAD_REQUEST);
     }
     user.password = await encodePassword(newPassword);
+    user.lastPasswordChange = new Date();
     await this.usersRepository.findOneAndUpdate({ userId }, user);
     const updated = await this.getUserById(userId);
     return { userId: updated.userId, username: updated.username };
