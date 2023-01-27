@@ -8,15 +8,8 @@ export class RegisterController {
   constructor(private readonly registerService: RegisterService) {}
   @Post()
   @UsePipes(ValidationPipe)
-  async register(
-    @Body() dto: RegisterUserDto,
-    @Session() session: Record<string, any>,
-  ) {
-    const user = await this.registerService.register(
-      dto.username,
-      dto.password,
-    );
-    session.authentidated = true;
-    return { session, user };
+  async register(@Body() dto: RegisterUserDto) {
+    await this.registerService.register(dto.username, dto.password);
+    return { message: 'registration completed successfully' };
   }
 }

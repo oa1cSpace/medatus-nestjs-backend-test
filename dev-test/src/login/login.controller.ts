@@ -12,8 +12,8 @@ export class LoginController {
     @Body() dto: RegisterUserDto,
     @Session() session: Record<string, any>,
   ) {
-    const user = await this.loginService.login(dto.username, dto.password);
+    await this.loginService.login(dto.username, dto.password);
     session.authentidated = true;
-    return { session, user };
+    return { session, message: 'login successful' };
   }
 }

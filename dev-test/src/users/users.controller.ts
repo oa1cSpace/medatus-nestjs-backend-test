@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Session, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthenticatedGuard } from '../auth/authenticated.guard';
 
@@ -9,11 +9,13 @@ export class UsersController {
   @Post('change-password')
   async changePassword(
     @Body() dto: { session: any; oldPassword: string; newPassword: string },
+    @Session() session: Record<string, any>,
   ) {
-    return this.usersService.updatePassword(
+    await this.usersService.updatePassword(
       dto.session.userId,
       dto.oldPassword,
       dto.newPassword,
     );
+    return { session, message: 'password changed successful' };
   }
 }

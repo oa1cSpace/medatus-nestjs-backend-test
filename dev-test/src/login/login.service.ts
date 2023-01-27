@@ -13,7 +13,10 @@ export class LoginService {
   async login(username: string, password: string) {
     const user = await this.usersService.getUserByUsername(username);
     if (!user) {
-      throw new HttpException('No such user', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Invalid username or password',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     const isPasswordMatching = await comparePassword(password, user.password);
     if (!isPasswordMatching) {

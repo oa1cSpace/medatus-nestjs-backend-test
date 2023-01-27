@@ -3,12 +3,15 @@ import { AppModule } from './app.module';
 import * as session from 'express-session';
 import * as passport from 'passport';
 
+const PORT = process.env.PORT;
+const PID = process.pid;
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(
     session({
       name: 'medatus sid',
-      secret: 'my-secret',
+      secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -18,6 +21,10 @@ async function bootstrap() {
   );
   app.use(passport.initialize());
   app.use(passport.session());
-  await app.listen(3000);
+  await app.listen(PORT, () => {
+    console.info(
+      `[INFO] 🟢 Server started on port ${PORT} with process ID: ${PID}`,
+    );
+  });
 }
-bootstrap();
+bootstrap().then();
